@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family:  Arial, Gadget, sans-serif;
+    color:#282828;
+    margin: 0px;
+
+}
+
+.nav-bar {
+    background: linear-gradient(-90deg, rgba(152, 223, 225, 0.81), rgba(243, 231, 152, 0.96));
+    height: 60px;
+    margin-bottom: 50px;
+}
