@@ -29,6 +29,9 @@ Vue.component('component', {
         eventBus.$on('addColumn_1', card => {
             this.column_1.push(card)
         })
+        eventBus.$on('addColumn_2', card => {
+            this.column_2.push(card)
+        })
     }
 })
 
@@ -90,7 +93,7 @@ Vue.component('column_1', {
             <div>
             <p>Запланированные задачи</p>
                 <div v-for="card in column_1">
-                   <a @click="deleteCard(card)">Удалить</a>  
+                   <a @click="deleteCard">Удалить</a>  
                    <a @click="card.edit = true">Редактировать</a>
                    <div>Название: {{ card.name }}</div>
                     <div>Описание: {{ card.description }}</div>
@@ -129,7 +132,7 @@ Vue.component('column_1', {
     methods: {
         nextColumn(card){
             this.column_1.splice(this.column_1.indexOf(card), 1)
-            eventBus.emit('addColumn_2',card)
+            eventBus.$emit('addColumn_2',card)
         },
         deleteCard(card){
             this.column_1.splice(this.column_1.indexOf(card),1)
@@ -143,27 +146,27 @@ Vue.component('column_1', {
     }
 })
 
-/*Vue.component('column_2', {
+Vue.component('column_2', {
     template: `
         <section id="sct">
             <div>
             <p>Задачи в работе</p>
-                <div>
+                <div  v-for="card in column_2">
                    <a>Редактировать</a>
-                   <div>Название</div>
-                    <div>Описание</div>
-                    <div>Дата создания</div>
-                    <div>Крайний срок</div>
-                    <div>Причина переноса: <p></p></div>
-                    <div>Последнее изменение</div>
-                    <a>Следующая колонка</a>
-                    <div>
+                   <div>Название: {{ card.name }}</div>
+                    <div>Описание: {{ card.description }}</div>
+                    <div>Дата создания: {{ card.date }}</div>
+                    <div>Крайний срок: {{ card.deadline }}</div>
+                    <div v-if="card.reason.length">Причина переноса: <p p v-for="reason in card.reason">{{ reason }}</p></div>
+                    <div v-if="card.editDate != null">Последнее изменение: {{ card.editDate }}</div>
+                    <a @click="nextColumn(card)">Следующая колонка</a>
+                    <div v-if="card.edit">
                         <form>
                             <p>Новое название: 
-                                <input type="text"  placeholder="Название">
+                                <input v-model="card.name" type="text"  placeholder="Название">
                             </p>
                             <p>Новое описание: 
-                                <textarea></textarea>
+                                <textarea v-model="card.description"></textarea>
                             </p>
                             <p>
                                 <input type="submit" class="btn" value="Изменить карточку">
@@ -184,7 +187,7 @@ Vue.component('column_1', {
     },
 })
 
-Vue.component('column_3', {
+/*Vue.component('column_3', {
     template: `
         <section id="sct">
             <div>
@@ -236,9 +239,9 @@ Vue.component('column_3', {
             type: Object
         }
     },
-})
+})*/
 
-Vue.component('column_4', {
+/*Vue.component('column_4', {
     template: `
         <section id="sct">
             <div>
