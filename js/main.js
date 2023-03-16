@@ -6,6 +6,8 @@ Vue.component('component', {
         <div class="columns">
             
             <p class="head_text">Kanban доска</p>
+            
+            <newCard></newCard>
      
                 <column_1 :column_1="column_1"></column_1>
                 <column_2 :column_2="column_2"></column_2>
@@ -29,16 +31,18 @@ Vue.component('component', {
 Vue.component('newCard', {
     template: `
     <div>
-        <form>
+        <form class="add_colum">
             <div>
                 <div>
-                    <input required  type="text" placeholder="Название">
+                    <div сlass="int">
+                        <input required  type="text" placeholder="Название">
+                    </div>
+                <div>
+                    <textarea required id="point" class="txt" placeholder="Описание"> </textarea>
                 </div>
+            </div>    
             <div>
-                <textarea required id="point"  placeholder="Описание"> </textarea>
-            </div>
-            <div>
-                <input required type="date" >
+                <input class="date" required type="date" >
             </div>
             <button type="submit" class="btn">Добавить</button>
             </div>
@@ -58,10 +62,10 @@ Vue.component('newCard', {
 
 Vue.component('column_1', {
     template: `
-        <section>
+        <section id="sct">
             <div>
             <p>Запланированные задачи</p>
-                <div class="card">
+                <div>
                    <a>Удалить</a>  <a>Редактировать</a>
                    <div>Название</div>
                     <div>Описание</div>
@@ -101,7 +105,7 @@ Vue.component('column_1', {
 
 Vue.component('column_2', {
     template: `
-        <section>
+        <section id="sct">
             <div>
             <p>Задачи в работе</p>
                 <div>
@@ -142,7 +146,7 @@ Vue.component('column_2', {
 
 Vue.component('column_3', {
     template: `
-        <section>
+        <section id="sct">
             <div>
             <p>Тестирование</p>
                 <div>
@@ -196,7 +200,7 @@ Vue.component('column_3', {
 
 Vue.component('column_4', {
     template: `
-        <section>
+        <section id="sct">
             <div>
             <p>Выполненные задачи</p>
                 <div>

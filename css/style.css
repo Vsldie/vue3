@@ -16,3 +16,72 @@ body {
     height: 60px;
     margin-bottom: 50px;
 }
+
+.head_text{
+    text-align: center;
+    font-size: 30pt;
+     color: #282828;
+}
+
+textarea{
+    resize: none;
+    height: 150px;
+    margin-top: px;
+
+}
+
+.add_colum{
+    text-align: center;
+    margin-top: 45px;
+}
+
+.btn{
+    margin-top: 20px;
+    height: 40px;
+    width: 350px;
+    background: rgb(179, 222, 207);
+    box-shadow: 12px 9px 10px 4px rgb(121 122 111 / 18%);
+    border: 0;
+    border-radius: 5px;
+    color: #494949;
+
+}
+
+.btn:hover{
+    background: #f3ed94;
+    color: #494949;
+}
+
+
+.txt{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 132px;
+    width: 344px;
+    box-shadow: 12px 9px 10px 4px rgb(121 122 111 / 18%);
+    border: 0;
+    border-radius: 5px;
+    color: #494949;
+}
+
+form>div>div>div>input{
+    height: 40px;
+    width: 350px;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 12px 9px 10px 4px rgb(121 122 111 / 18%);
+
+}
+
+.date{
+    height: 50px;
+    height: 50px;
+    box-shadow: 12px 9px 10px 4px rgb(121 122 111 / 18%);
+    border: 0;
+    border-radius: 5px;
+    color: #494949;
+}
+
+#sct{
+    box-sizing: border-box;
+}
