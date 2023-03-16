@@ -2,7 +2,7 @@ let eventBus = new Vue()
 
 Vue.component('component', {
     template: `
- 
+    <section>
         <div class="columns">
             
             <p class="head_text">Kanban доска</p>
@@ -14,6 +14,7 @@ Vue.component('component', {
                 <column_3 :column_3="column_3"></column_3>
                 <column_4 :column_3="column_4"></column_4>
         </div>
+    </section>
     `,
 
     data() {
@@ -21,9 +22,13 @@ Vue.component('component', {
             column_1: [],
             column_2: [],
             column_3: [],
-            errors: [],
+            columns_4: []
         }
-
+    },
+    mounted() {
+        eventBus.$on('addColumn_1', card => {
+            this.column_1.push(card)
+        })
     }
 })
 
@@ -31,18 +36,18 @@ Vue.component('component', {
 Vue.component('newCard', {
     template: `
     <div>
-        <form class="add_colum">
+        <form @submit.prevent="onSubmit" class="add_colum">
             <div>
                 <div>
                     <div сlass="int">
-                        <input required  type="text" placeholder="Название">
+                        <input v-model="name" required  type="text" placeholder="Название">
                     </div>
                 <div>
-                    <textarea required id="point" class="txt" placeholder="Описание"> </textarea>
+                    <textarea v-model="description" required id="point" class="txt" placeholder="Описание"> </textarea>
                 </div>
             </div>    
             <div>
-                <input class="date" required type="date" >
+                <input v-model="deadline" class="date" required type="date" >
             </div>
             <button  type="submit" class="btn">Добавить</button>
             </div>
@@ -57,7 +62,26 @@ Vue.component('newCard', {
             deadline: null
         }
     },
-    methods: {}
+    methods: {
+        onSubmit() {
+            let card = {
+                name: this.name,
+                description: this.description,
+                date: new Date().toLocaleString(),
+                deadline: this.deadline,
+                reason: [],
+                transfer: false,
+                edit: false,
+                editDate: null,
+                efDate: null
+            }
+            eventBus.$emit('addColumn_1', card)
+            this.name = null
+            this.description = null
+            this.date = null
+            this.deadline = null
+        }
+    }
 })
 
 Vue.component('column_1', {
@@ -65,21 +89,22 @@ Vue.component('column_1', {
         <section id="sct">
             <div>
             <p>Запланированные задачи</p>
-                <div>
-                   <a>Удалить</a>  <a>Редактировать</a>
-                   <div>Название</div>
-                    <div>Описание</div>
-                    <div>Дата создания</div>
-                    <div>Крайний срок</div>
-                    <div>Последнее изменение</div>
-                                     <a>Следующая колонка</a>
-                    <div>
-                        <form>
+                <div v-for="card in column_1">
+                   <a @click="deleteCard(card)">Удалить</a>  
+                   <a @click="card.edit = true">Редактировать</a>
+                   <div>Название: {{ card.name }}</div>
+                    <div>Описание: {{ card.description }}</div>
+                    <div>Дата создания: {{ card.date }}</div>
+                    <div>Крайний срок: {{ card.deadline }}</div>
+                    <div  v-if="card.editDate != null">Последнее изменение: {{ card.editDate }}</div>
+                    <a @click="nextColumn(card)">Следующая колонка</a>
+                    <div v-if="card.edit">
+                        <form @submit.prevent="updateTask(card)">
                             <p>Новое название: 
-                                <input type="text"  placeholder="Название">
+                                <input v-model="card.name" type="text"  placeholder="Название">
                             </p>
                             <p>Новое описание: 
-                                <textarea></textarea>
+                                <textarea v-model="card.description"></textarea>
                             </p>
                             <p>
                                 <input type="submit" class="btn" value="Изменить карточку">
@@ -118,7 +143,7 @@ Vue.component('column_1', {
     }
 })
 
-Vue.component('column_2', {
+/*Vue.component('column_2', {
     template: `
         <section id="sct">
             <div>
@@ -237,7 +262,7 @@ Vue.component('column_4', {
             type: Object
         }
     },
-})
+})*/
 
 
 let app = new Vue({
