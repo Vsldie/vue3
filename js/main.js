@@ -24,7 +24,7 @@ Vue.component('component', {
             errors: [],
         }
 
-    },
+    }
 })
 
 
@@ -44,7 +44,7 @@ Vue.component('newCard', {
             <div>
                 <input class="date" required type="date" >
             </div>
-            <button type="submit" class="btn">Добавить</button>
+            <button  type="submit" class="btn">Добавить</button>
             </div>
         </form>
     </div>
@@ -101,6 +101,21 @@ Vue.component('column_1', {
             type: Object
         },
     },
+    methods: {
+        nextColumn(card){
+            this.column_1.splice(this.column_1.indexOf(card), 1)
+            eventBus.emit('addColumn_2',card)
+        },
+        deleteCard(card){
+            this.column_1.splice(this.column_1.indexOf(card),1)
+        },
+        updateTask(card){
+            card.edit = false
+            this.column_1.push(card)
+            this.column_1.splice(this.column_1.indexOf(card), 1)
+            card.editDate = new Date().toLocaleString()
+        }
+    }
 })
 
 Vue.component('column_2', {
