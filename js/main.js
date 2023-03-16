@@ -182,6 +182,8 @@ Vue.component('column_3', {
             </div>
         </section>
     `,
+
+
     props: {
         column_3: {
             type: Array,
@@ -191,6 +193,33 @@ Vue.component('column_3', {
         }
     },
 })
+
+Vue.component('column_4', {
+    template: `
+        <section>
+            <div>
+            <p>Выполненные задачи</p>
+                <div>
+                    <div>Название</div>
+                    <div>Описание</div>
+                    <div>Дата создания</div>
+                    <div>Крайний срок</div>
+                    <div>Завершено вовремя</div>
+                    <div>Завершено не вовремя</div>
+                </div>
+            </div>
+        </section>
+    `,
+    props: {
+        column_4: {
+            type: Array,
+        },
+        card: {
+            type: Object
+        }
+    },
+})
+
 
 let app = new Vue({
     el: '#app'
