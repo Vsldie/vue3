@@ -20,13 +20,13 @@ body {
 .head_text{
     text-align: center;
     font-size: 30pt;
-     color: #282828;
+     color: #494949;;
 }
 
 textarea{
     resize: none;
     height: 150px;
-    margin-top: px;
+
 
 }
 
@@ -75,13 +75,25 @@ form>div>div>div>input{
 
 .date{
     height: 50px;
-    height: 50px;
     box-shadow: 12px 9px 10px 4px rgb(121 122 111 / 18%);
     border: 0;
     border-radius: 5px;
     color: #494949;
 }
 
-#sct{
-    box-sizing: border-box;
+.sct{
+    display: inline-block;
+    margin-right: 100px;
+    margin-top: 50px;
+    height: 300px;
+
+}
+.table_name{
+    font-size: 15pt;
+    text-decoration: underline;
+    color: #494949;
+}
+
+.data_table{
+    margin-top: 15px;
 }

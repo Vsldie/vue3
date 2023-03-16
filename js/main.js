@@ -89,10 +89,10 @@ Vue.component('newCard', {
 
 Vue.component('column_1', {
     template: `
-        <section id="sct">
+        <section class="sct">
             <div>
-            <p>Запланированные задачи</p>
-                <div v-for="card in column_1">
+            <p class="table_name">Запланированные задачи</p>
+                <div v-for="card in column_1" class="data_table">
                    <a @click="deleteCard">Удалить</a>  
                    <a @click="card.edit = true">Редактировать</a>
                    <div>Название: {{ card.name }}</div>
@@ -148,11 +148,11 @@ Vue.component('column_1', {
 
 Vue.component('column_2', {
     template: `
-        <section id="sct">
+        <section class="sct">
             <div>
-            <p>Задачи в работе</p>
-                <div  v-for="card in column_2">
-                   <a>Редактировать</a>
+            <p class="table_name">Задачи в работе</p>
+                <div  v-for="card in column_2" class="data_table">
+                   <a @click="card.edit = true">Редактировать</a>
                    <div>Название: {{ card.name }}</div>
                     <div>Описание: {{ card.description }}</div>
                     <div>Дата создания: {{ card.date }}</div>
@@ -161,7 +161,7 @@ Vue.component('column_2', {
                     <div v-if="card.editDate != null">Последнее изменение: {{ card.editDate }}</div>
                     <a @click="nextColumn(card)">Следующая колонка</a>
                     <div v-if="card.edit">
-                        <form>
+                        <form @submit.prevent="updateTask(card)">
                             <p>Новое название: 
                                 <input v-model="card.name" type="text"  placeholder="Название">
                             </p>
@@ -185,6 +185,19 @@ Vue.component('column_2', {
             type: Object
         }
     },
+    methods: {
+        nextColumn(card) {
+            this.column_2.splice(this.column_2.indexOf(card), 1)
+            eventBus.$emit('addColumn_3', card)
+        },
+
+        updateTask(card) {
+            card.editDate = new Date().toLocaleString()
+            card.edit = false
+            this.column_2.push(card)
+            this.column_2.splice(this.column_2.indexOf(card), 1)
+        }
+    }
 })
 
 /*Vue.component('column_3', {
