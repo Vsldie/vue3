@@ -12,7 +12,8 @@ Vue.component('component', {
                 <column_1 :column_1="column_1"></column_1>
                 <column_2 :column_2="column_2"></column_2>
                 <column_3 :column_3="column_3"></column_3>
-                <column_4 :column_3="column_4"></column_4>
+                <column_4 :column_4="column_4"></column_4>
+
         </div>
     </section>
     `,
@@ -22,9 +23,10 @@ Vue.component('component', {
             column_1: [],
             column_2: [],
             column_3: [],
-            columns_4: []
+            column_4: []
         }
     },
+
     mounted() {
         eventBus.$on('addColumn_1', card => {
             this.column_1.push(card)
@@ -161,7 +163,6 @@ Vue.component('column_2', {
                     <div>Описание: {{ card.description }}</div>
                     <div>Дата создания: {{ card.date }}</div>
                     <div>Крайний срок: {{ card.deadline }}</div>
-                    <div v-if="card.reason.length">Причина переноса: <p p v-for="reason in card.reason">{{ reason }}</p></div>
                     <div v-if="card.editDate != null">Последнее изменение: {{ card.editDate }}</div><br>
                     <a @click="card.edit = true" class="edit">Редактировать</a><br>
                     <a @click="nextColumn(card)" class="next">Следующая колонка</a>
@@ -217,12 +218,12 @@ Vue.component('column_3', {
                     <div>Крайний срок: {{card.deadline}}</div>
                     <div v-if="card.reason.length">Причина переноса: <p v-for="reason in card.reason">{{ reason }}</p></div>
                     <div v-if="card.editDate != null">Последнее изменение: {{ card.editDate }} </div>
-                    <a @click="card.edit = true" class="edit">Редактировать</a>
-                    <a >Предыдущая колонка</a><br>
+                    <a @click="card.edit = true" class="edit">Редактировать</a><br>
+                    <a @click="card.transfer = true" class="next">Предыдущая колонка</a><br>
                     <a @click="nextColumn(card)" class="next">Следующая колонка</a>
-                    <div>
+                    <div v-if="card.edit">
                         <form @submit.prevent="updateTask(card)">
-                            <p 
+                            <p> Новое название
                                 <input v-model="card.name" type="text"  placeholder="Название">
                             </p>
                             <p>Новое описание: 
@@ -233,13 +234,13 @@ Vue.component('column_3', {
                             </p>
                         </form>
                     </div>
-                    <div>
-                        <form>
-                            <p>Причина переноса:
-                                <input type="text">
+                    <div v-if="card.transfer">
+                        <form @submit.prevent="lastColumn(card)">
+                            <p >Причина переноса:
+                                <input type="text" id="reason">
                             </p>
                             <p>
-                                <input type="submit" value="Перенос">
+                                <input class="btn" type="submit" value="Перенос">
                             </p>
                         </form>
                     </div>
@@ -267,7 +268,14 @@ Vue.component('column_3', {
             card.edit = false
             this.column_3.push(card)
             this.column_3.splice(this.column_3.indexOf(card), 1)
-        }
+        },
+        lastColumn(card) {
+            let reasonValue = document.getElementById('reason').value;
+            card.reason.push(reasonValue)
+            card.transfer = false
+            this.column_3.splice(this.column_3.indexOf(card), 1)
+            eventBus.$emit('addColumn_2', card)
+        },
     }
 })
 
