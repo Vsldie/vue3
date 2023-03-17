@@ -37,6 +37,12 @@ Vue.component('component', {
         eventBus.$on('addColumn_3', card => {
             this.column_3.push(card)
         })
+        eventBus.$on('addColumn_4', card => {
+            this.column_4.push(card)
+            if (card.date > card.deadline) {
+                card.current = false
+            }
+        })
 
     }
 })
@@ -82,7 +88,7 @@ Vue.component('newCard', {
                 transfer: false,
                 edit: false,
                 editDate: null,
-                efDate: null
+                efDate: null,
             }
             eventBus.$emit('addColumn_1', card)
             this.name = null
@@ -158,12 +164,12 @@ Vue.component('column_2', {
             <div>
             <p class="table_name">Задачи в работе</p>
                 <div  v-for="card in column_2" class="data_table">
-                   
-                   <div>Название: {{ card.name }}</div>
+                    <div>Название: {{ card.name }}</div>
                     <div>Описание: {{ card.description }}</div>
                     <div>Дата создания: {{ card.date }}</div>
                     <div>Крайний срок: {{ card.deadline }}</div>
                     <div v-if="card.editDate != null">Последнее изменение: {{ card.editDate }}</div><br>
+                    <div class="tasks" v-if="card.reason.length">Причина переноса: <p v-for="reason in card.reason">{{ reason }}</p></div><br>
                     <a @click="card.edit = true" class="edit">Редактировать</a><br>
                     <a @click="nextColumn(card)" class="next">Следующая колонка</a>
                     <div v-if="card.edit">
@@ -211,16 +217,14 @@ Vue.component('column_3', {
         <section class="sct">
             <div>
             <p class="table_name">Тестирование</p>
-                <div v-for="card in column_3">
+                <div v-for="card in column_3" class="data_table">
                    <div>Название: {{ card.name }}</div>
                    <div>Описание: {{ card.description }}</div>
                     <div>Дата создания: {{card.date}}</div>
                     <div>Крайний срок: {{card.deadline}}</div>
-                    <div v-if="card.reason.length">Причина переноса: <p v-for="reason in card.reason">{{ reason }}</p></div>
-                    <div v-if="card.editDate != null">Последнее изменение: {{ card.editDate }} </div>
+                    <div v-if="card.editDate != null">Последнее изменение: {{ card.editDate }}</div><br>
                     <a @click="card.edit = true" class="edit">Редактировать</a><br>
-                    <a @click="card.transfer = true" class="next">Предыдущая колонка</a><br>
-                    <a @click="nextColumn(card)" class="next">Следующая колонка</a>
+                    <a @click="card.transfer = true" class="next">Предыдущая колонка</a> <a @click="nextColumn(card)" class="next">Следующая колонка</a>
                     <div v-if="card.edit">
                         <form @submit.prevent="updateTask(card)">
                             <p> Новое название
@@ -279,18 +283,18 @@ Vue.component('column_3', {
     }
 })
 
-/*Vue.component('column_4', {
+Vue.component('column_4', {
     template: `
-        <section id="sct">
+        <section class="sct">
             <div>
-            <p>Выполненные задачи</p>
-                <div>
-                    <div>Название</div>
-                    <div>Описание</div>
-                    <div>Дата создания</div>
-                    <div>Крайний срок</div>
-                    <div>Завершено вовремя</div>
-                    <div>Завершено не вовремя</div>
+            <p class="table_name">Выполненные задачи</p>
+                <div v-for="card in column_4" class="data_table">
+                    <div>Название: {{ card.name }}</div>
+                    <div>Описание: {{ card.description }}</div>
+                    <div>Дата создания: {{ card.date }}</div>
+                    <div>Крайний срок: {{ card.deadline }}</div><br>
+                    <p>Завершено</p>
+                    <p>Задание больше не действительно</p> 
                 </div>
             </div>
         </section>
@@ -303,7 +307,7 @@ Vue.component('column_3', {
             type: Object
         }
     },
-})*/
+})
 
 
 let app = new Vue({
