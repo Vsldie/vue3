@@ -40,7 +40,7 @@ Vue.component('component', {
         eventBus.$on('addColumn_4', card => {
             this.column_4.push(card)
             if (card.date > card.deadline) {
-                card.current = false
+                card.status = false
             }
         })
 
@@ -82,13 +82,15 @@ Vue.component('newCard', {
             let card = {
                 name: this.name,
                 description: this.description,
-                date: new Date().toLocaleString(),
+                date: new Date().toLocaleDateString().split(".").reverse().join("-"),
                 deadline: this.deadline,
                 reason: [],
                 transfer: false,
                 edit: false,
                 editDate: null,
                 efDate: null,
+                status: true
+
             }
             eventBus.$emit('addColumn_1', card)
             this.name = null
@@ -293,8 +295,8 @@ Vue.component('column_4', {
                     <div>Описание: {{ card.description }}</div>
                     <div>Дата создания: {{ card.date }}</div>
                     <div>Крайний срок: {{ card.deadline }}</div><br>
-                    <p>Завершено</p>
-                    <p>Задание больше не действительно</p> 
+                    <p v-if="card.status">Завершено</p>
+                    <p v-else>Задание больше не действительно</p> 
                 </div>
             </div>
         </section>
