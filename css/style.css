@@ -84,10 +84,19 @@ form>div>div>div>input{
 .sct{
     display: inline-block;
     margin-right: 100px;
-    margin-top: 50px;
-    height: 300px;
-
+    margin-top: 80px;
+    height: auto;
+    min-height: 300px;
+    background-color: #f3ed94;
+    width: 350px;
+    text-align: center;
+    border-radius: 10px;
 }
+
+.sct:hover{
+    background-color: rgb(179, 222, 207);
+}
+
 .table_name{
     font-size: 15pt;
     text-decoration: underline;
@@ -96,4 +105,26 @@ form>div>div>div>input{
 
 .data_table{
     margin-top: 15px;
+}
+.edit{
+
+}
+
+.edit:hover{
+    color: rgba(37, 150, 0, 0.9);
+}
+
+.delet{
+
+}
+
+.delet:hover{
+    color: #ff3737;
+}
+.next{
+
+}
+
+.next:hover{
+    color: #2d4dd7;
 }
