@@ -82,8 +82,8 @@ Vue.component('newCard', {
             let card = {
                 name: this.name,
                 description: this.description,
-                date: new Date().toLocaleDateString().split(".").reverse().join("-"),
-                deadline: this.deadline,
+                date: new Date(),
+                deadline: new Date(this.deadline),
                 reason: [],
                 transfer: false,
                 edit: false,
@@ -155,7 +155,7 @@ Vue.component('column_1', {
             card.edit = false
             this.column_1.push(card)
             this.column_1.splice(this.column_1.indexOf(card), 1)
-            card.editDate = new Date().toLocaleString()
+            card.editDate = new Date()
         }
     }
 })
@@ -206,7 +206,7 @@ Vue.component('column_2', {
         },
 
         updateTask(card) {
-            card.editDate = new Date().toLocaleString()
+            card.editDate = new Date()
             card.edit = false
             this.column_2.push(card)
             this.column_2.splice(this.column_2.indexOf(card), 1)
@@ -270,7 +270,7 @@ Vue.component('column_3', {
             eventBus.$emit('addColumn_4', card)
         },
         updateTask(card){
-            card.editDate = new Date().toLocaleString()
+            card.editDate = new Date()
             card.edit = false
             this.column_3.push(card)
             this.column_3.splice(this.column_3.indexOf(card), 1)
